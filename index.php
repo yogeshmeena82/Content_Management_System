@@ -1,67 +1,98 @@
-<?php include 'includes/connection.php';
+<?php include 'includes/adminheader.php';
 ?>
-<?php include 'includes/header.php';?>
-        
-   <?php include 'includes/navbar.php';?>
-        
 
-    <div class="container">
-        <div class="row">
-	        
-	        <div class="col-md-8">
+    <div id="wrapper">
+       
+       <?php include 'includes/adminnav.php';?>
+        <div id="page-wrapper">
 
-<?php
-$query = "SELECT * FROM posts WHERE status='published' ORDER BY updated_on DESC";
-$run_query = mysqli_query($conn, $query) or die(mysqli_error($conn));
-if (mysqli_num_rows($run_query) > 0) {
-while ($row = mysqli_fetch_assoc($run_query)) {
-  $post_title = $row['title'];
-  $post_id = $row['id'];
-  $post_author = $row['author'];
-  $post_date = $row['postdate'];
-  $post_image = $row['image'];
-  $post_content = $row['content'];
-  $post_tags = $row['tag'];
-  $post_status = $row['status'];
-  if ($post_status !== 'published') {
-    echo "NO POST PLS";
-  } else {
+            <div class="container-fluid">
 
-    ?>
-<p><h2><a href="publicposts.php?post=<?php echo $post_id; ?>"><?php echo $post_title; ?></a></h2></p>
-            <p><h3>by <a href="#"><?php echo $post_author; ?></a></h3></p>
-            <p><span class="glyphicon glyphicon-time"></span>Posted on <?php echo $post_date; ?></p>
-            <hr><a href="publicposts.php?post=<?php echo $post_id; ?>">
-            <img class="img-responsive img-rounded" src="allpostpics/<?php echo $post_image; ?>" alt="900 * 300"></a>
-            <hr>
-            <p><?php echo substr($post_content, 0, 300) . '.........'; ?></p>
-            <a href="publicposts.php?post=<?php echo $post_id; ?>"><button type="button" class="btn btn-primary">Read More<span class="glyphicon glyphicon-chevron-right"></span></button></a>
-            <hr>
+                
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            Welcome to NEWS-BUZZ  
+                            <small><?php echo $_SESSION['firstname']; ?></small>
+                        </h1>
+
+                    </div>
+                </div>
+                
+<div class="row">
+                    
+                    <div class="col-md-6 col-lg-3">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-file-text fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9">
+                                    <?php
+$query = "SELECT * FROM posts";
+$result = mysqli_query($conn, $query) or die(mysqli_error($conn));
+$post_num = mysqli_num_rows($result);
+echo "<div class='text-right huge'>{$post_num}</div>";
+?>
+
+                                        <div class="text-right">Posts</div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="posts.php">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View All Posts</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-users fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9">
+                                                                   <?php
+$query = "SELECT * FROM users";
+$result = mysqli_query($conn, $query) or die(mysqli_error($conn));
+$user_num = mysqli_num_rows($result);
+echo "<div class='text-right huge'>{$user_num}</div>";
+?>
+
+
+                                        <div class="text-right">Users</div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="users.php">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View All Users</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                   
+            </div>
             
-            <?php }}}?>
-
-            <hr>
-            <ul class="pager">
-          <li class="previous"><a href="#"><span class="glyphicon glyphicon-arrow-left"></span> Older</a></li>
-          <li class="next"><a href="#">Newer <span class="glyphicon glyphicon-arrow-right"></span></a></li>
-        </ul>
-          </div>
-	        
-	        <div class="col-md-4">
-
-               <?php include 'includes/sidebar.php';
-?>
-
-	        </div>
-	        
         </div>
-
         
-        <?php include 'includes/footer.php';?>
-        
+   <?php 'includes/adminfooter.php';?>
     </div>
-  <script src="js/jquery.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.js"></script>
+
+  
+    <script src="js/bootstrap.min.js"></script>
 
 </body>
+
 </html>
